@@ -1,2 +1,2 @@
 # CPE593 Data Structures
-S
+Daniel Zatko
