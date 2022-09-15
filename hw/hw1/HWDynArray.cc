@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <cstdint>
+#include <stdint.h>
 #include <time.h>
 
 using namespace std;
@@ -17,11 +17,9 @@ private:
 	int* p;
 	uint32_t size; // the number of elements used
 	uint32_t capacity; // the amount of memory
-	void checkGrow() {
+	void checkGrow () {
 		// if the memory needs to grow, double in size
 		//TODO: YOU IMPLEMENT THIS
-		if (GrowArray().size > GrowArray().capacity) //Doubles the size of capacity when it becomes full
-			capacity *= 2;
 	}
 
 public:
@@ -48,7 +46,7 @@ public:
 			delete [] p;
 			p = temp;
 		}
-		size++
+		size++;
 		checkGrow();
 	}
 
@@ -84,7 +82,7 @@ int main() {
 
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
 
-  a.removeEvens();
+  //a.removeEvens();
 	// 999 1001 1003 ... 1999
   // keep 2 indices (i,j)
 	// first index goes through the array
@@ -104,5 +102,5 @@ int main() {
 	 */
 
 
-	cout << a << '\n';
+	std::cout << a << '\n';
 }
