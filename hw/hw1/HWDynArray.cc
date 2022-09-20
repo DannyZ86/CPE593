@@ -19,7 +19,10 @@ private:
 	void checkGrow () {
 		// if the memory needs to grow, double in size
 		// TODO: YOU IMPLEMENT THIS
-		if (size > capacity){
+		if(capacity == 0){
+			capacity++;
+		}
+		else{
 			capacity *= 2;
 		}
 	}
@@ -35,41 +38,59 @@ public:
 	int get(uint32_t pos) const {
     return p[pos];
   }
-
+	//Runtime Big Omega (1) or O(size)
 	void addEnd(int v) {
-		//Initial condition for when size = 0
-		if(size == 0){
-			int* temp = new int[capacity+1];
-			temp[0] = v;
-			delete [] p;
-			p = temp;
-			capacity++;
-		}
-		else if(size < capacity){
+		if(size < capacity){
 			p[size-1] = v;
 		}
 		else{
-			int* temp = new int[capacity*2];
-			for(uint32_t i = 0; i < capacity; i++)
+			checkGrow();
+			int* temp = new int[capacity];
+			for(uint32_t i = 0; i < size - 1; i++)
 				temp[i] = p[i];
-			temp[size] = v;
+			temp[size-1] = v;
 			delete [] p;
 			p = temp;
 		}
 		size++;
-		checkGrow();
 	}
-
+	//runtime is always O(size)
 	void addStart(int v) {
-
+		if(size < capacity){
+			int past;
+			for(uint32_t i = 1; i < size; i++){
+				past = p[i];
+				p[i] = p[i-1];
+				
+			}
+			p[0] = v;
+		}
+		else{
+			checkGrow();
+			int* temp = new int[capacity];
+			for(uint32_t i = 1; i < size; i++){
+				temp[i] = p[i-1];
+			}
+			temp[0] = v;
+			delete [] p;
+			p = temp;
+		}
+		size++;
 	}
-
-	void removeStart() {
-
+	// Runtime O(size)
+	void removeStart() { 
+		int* temp = new int[capacity-1];
+    		for (uint32_t i = 1; i < size; i++) {
+        		temp[i-1] = data[i];
+    		}
+    		delete [] data;
+    		data = temp;
+    		capacity--;
+		size--;
 	}
-
+	// Runtime O(size)
 	void removeEnd() {
-
+	
 	}
 
 	void removeEvens() {
