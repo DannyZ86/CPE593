@@ -1,6 +1,6 @@
 #include <iostream>
-#include <stdint.h>
-#include <time.h>
+#include <cstdint>
+#include <vector>
 
 using namespace std;
 
@@ -8,7 +8,6 @@ using namespace std;
 Daniel Zatko
 CPE 593
 Section A
-~ I used code provided from session 02 as a referenced
 */
 
 
@@ -19,12 +18,23 @@ private:
 	uint32_t capacity; // the amount of memory
 	void checkGrow () {
 		// if the memory needs to grow, double in size
-		//TODO: YOU IMPLEMENT THIS
+		// TODO: YOU IMPLEMENT THIS
+		if (size > capacity){
+			capacity *= 2;
+		}
 	}
 
 public:
-	GrowArray() : p(nullptr), size(0), capacity(0) {}
-	~GrowArray() {delete [] p; }
+	GrowArray() : size(0), capacity(0), p(nullptr) {}
+	GrowArray(uint32_t capacity) : size(0), capacity(capacity), p(new int[capacity]) {}
+	~GrowArray() { delete [] p; }
+
+	GrowArray(const GrowArray& orig) = delete;
+	GrowArray& operator =(const GrowArray& orig) = delete;
+
+	int get(uint32_t pos) const {
+    return p[pos];
+  }
 
 	void addEnd(int v) {
 		//Initial condition for when size = 0
@@ -53,6 +63,7 @@ public:
 	void addStart(int v) {
 
 	}
+
 	void removeStart() {
 
 	}
@@ -60,10 +71,16 @@ public:
 	void removeEnd() {
 
 	}
+
+	void removeEvens() {
+
+	}
 };
 
 int main() {
+	//How does this work?
 	GrowArray a(500); // empty list, with 500 elements
+
 
 	for (int i = 0; i < 500; i++)
 		a.addEnd(i); // really fast!
@@ -80,10 +97,12 @@ int main() {
 	for (int i = 0; i < 9000; i++)
 		a.removeStart();
 
+
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
 
-  //a.removeEvens();
-	// 999 1001 1003 ... 1999
+  a.removeEvens();
+
+	//999 1001 1003 ... 1999
   // keep 2 indices (i,j)
 	// first index goes through the array
 	// second advances only when you have one you want
@@ -101,6 +120,6 @@ int main() {
     end
 	 */
 
-
-	std::cout << a << '\n';
+	 //This wont work...
+	//cout << a << '\n';
 }
