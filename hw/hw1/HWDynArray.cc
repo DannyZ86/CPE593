@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdint>
-#include <vector>
 
 using namespace std;
 
@@ -28,6 +27,9 @@ private:
 	}
 
 public:
+	//For the constructor and destructor stuff, I had help from a alumni
+	//He helped me understand the purpose and syntax
+	//His name is Joey Kuhn
 	GrowArray() : size(0), capacity(0), p(nullptr) {}
 	GrowArray(uint32_t capacity) : size(0), capacity(capacity), p(new int[capacity]) {}
 	~GrowArray() { delete [] p; }
@@ -38,59 +40,61 @@ public:
 	int get(uint32_t pos) const {
     return p[pos];
   }
+
 	//Runtime Big Omega (1) or O(size)
 	void addEnd(int v) {
-		if(size < capacity){
-			p[size-1] = v;
-		}
-		else{
-			checkGrow();
-			int* temp = new int[capacity];
-			for(uint32_t i = 0; i < size - 1; i++)
-				temp[i] = p[i];
-			temp[size-1] = v;
-			delete [] p;
-			p = temp;
-		}
-		size++;
-	}
-	//runtime is always O(size)
-	void addStart(int v) {
-		if(size < capacity){
-			int past;
-			for(uint32_t i = 1; i < size; i++){
-				past = p[i];
-				p[i] = p[i-1];
-				
-			}
+		if(size == 0){
 			p[0] = v;
 		}
+		else if(size < capacity){
+			p[size] = v;
+		}
 		else{
 			checkGrow();
 			int* temp = new int[capacity];
-			for(uint32_t i = 1; i < size; i++){
-				temp[i] = p[i-1];
-			}
-			temp[0] = v;
+			for(uint32_t i = 0; i < size; i++)
+				temp[i] = p[i];
+			temp[size] = v;
 			delete [] p;
 			p = temp;
 		}
 		size++;
 	}
+
+	//runtime is always O(size)
+	//No matter what you always have to shift the array over once
+	//Therefore the code does not need to change from BadDynamicArray
+	void addStart(int v) {
+		int* temp = new int[capacity+1];
+		temp[0] = v;
+		for(uint32_t i = 1; i <= size; i++){
+			temp[i] = p[i-1];
+		}
+		delete [] p;
+		p = temp;
+		size++;
+	}
+
 	// Runtime O(size)
-	void removeStart() { 
+	//No matter what you always have to shift the array over once
+	//Therefore the code does not need to change from BadDynamicArray
+	void removeStart() {
 		int* temp = new int[capacity-1];
-    		for (uint32_t i = 1; i < size; i++) {
-        		temp[i-1] = data[i];
-    		}
-    		delete [] data;
-    		data = temp;
-    		capacity--;
+    for (uint32_t i = 1; i < size; i++) {
+      temp[i-1] = p[i];
+    }
+    delete [] p;
+    p = temp;
 		size--;
 	}
-	// Runtime O(size)
+
+	// Runtime O(1)
 	void removeEnd() {
-	
+		size--;
+	}
+
+	int getSize(){
+		return size;
 	}
 
 	void removeEvens() {
@@ -99,18 +103,27 @@ public:
 };
 
 int main() {
-	//How does this work?
-	GrowArray a(500); // empty list, with 500 elements
+	GrowArray a(500); // empty list, with 500 elements\
 
-
+	//Tested and it seems to work as it should
 	for (int i = 0; i < 500; i++)
 		a.addEnd(i); // really fast!
 
+	//code to check my array after addEnd function
+/*
+	for(uint32_t i=0; i < a.getSize(); i++)
+		cout << a.get(i) << " ";
+	cout << '\n';
+*/
+
+	//Tested and seems to grow as it should
 	for (int i = 0; i < 100000; i++)
 		a.addEnd(i); // every time you need to grow, double
 
+	//Tested and seems to output as shown
 	a.addStart(5);
 	// 5 0 1 2 3 4 5 6 7 8....   499 0 1 2 3 4 5 6 .... 99999
+
 
 	for (int i = 0; i < 90500; i++)
 		a.removeEnd();
@@ -120,6 +133,11 @@ int main() {
 
 
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
+
+	cout << "Next Step" << '\n';
+	for(uint32_t i=0; i < a.getSize(); i++)
+		cout << a.get(i) << " ";
+	cout << '\n';
 
   a.removeEvens();
 
