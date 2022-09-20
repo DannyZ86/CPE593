@@ -124,7 +124,7 @@ int main() {
 	a.addStart(5);
 	// 5 0 1 2 3 4 5 6 7 8....   499 0 1 2 3 4 5 6 .... 99999
 
-
+	//Both functions tested and seem to have correct output which was corrected on discord
 	for (int i = 0; i < 90500; i++)
 		a.removeEnd();
 
@@ -133,11 +133,6 @@ int main() {
 
 
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
-
-	cout << "Next Step" << '\n';
-	for(uint32_t i=0; i < a.getSize(); i++)
-		cout << a.get(i) << " ";
-	cout << '\n';
 
   a.removeEvens();
 
