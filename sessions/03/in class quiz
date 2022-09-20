@@ -1,0 +1,34 @@
+Daniel Zatko
+
+1) O(1) WRONG omega (1) is true though
+  This is a recursive function,
+    The first if is a base case
+    The first and second function is O(1) because a decreases linear in the second
+
+  Answer O(log a)
+
+2)
+BadGrowArray
+  O(n) Correct
+  O(n) Correct
+  O(n) Correct
+  O(n) Correct
+  O(n) Correct
+  O(1) Correct
+GrowArray
+  O(1) WRONG ANS O(n)
+  O(n) Wrong ANS O(1)
+  O(1) Correct
+  O(n) Correct
+  O(n) Correct
+  O(n) Correct
+  O(1) Correct
+int main()
+  O(n^2) Correct
+  O(n) Correct
+  O(n^2) Correct
+
+  O(1) Wrong ANS O(n)
+
+  O(n^2) Correct
+  O(nlogn) Wrong O(n)
