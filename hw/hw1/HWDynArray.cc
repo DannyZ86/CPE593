@@ -137,12 +137,15 @@ int main() {
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
 
   a.removeEvens();
-
+/*
 	for(uint32_t i=0; i < a.getSize(); i++)
 		cout << a.get(i) << " ";
 	cout << '\n';
+*/
+//	cout << a.getSize();
 
-	cout << a.getSize();
+
+
 	//999 1001 1003 ... 1999
   // keep 2 indices (i,j)
 	// first index goes through the array
