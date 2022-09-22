@@ -18,10 +18,16 @@ private:
 	void checkGrow () {
 		// if the memory needs to grow, double in size
 		// TODO: YOU IMPLEMENT THIS
-		if(capacity == 0){
-			capacity++;
+		//This function assumes that the capacity is not zero
+		if(size < capacity){
+			return;
 		}
 		else{
+			int* temp = new int[capacity*2];
+			for(uint32_t i = 0; i < size; i++)
+				temp[i] = p[i];
+			delete [] p;
+			p = temp;
 			capacity *= 2;
 		}
 	}
@@ -43,21 +49,8 @@ public:
 
 	//Runtime Big Omega (1) or O(size)
 	void addEnd(int v) {
-		if(size == 0){
-			p[0] = v;
-		}
-		else if(size < capacity){
-			p[size] = v;
-		}
-		else{
-			checkGrow();
-			int* temp = new int[capacity];
-			for(uint32_t i = 0; i < size; i++)
-				temp[i] = p[i];
-			temp[size] = v;
-			delete [] p;
-			p = temp;
-		}
+		checkGrow();
+		p[size] = v;
 		size++;
 	}
 
@@ -98,7 +91,17 @@ public:
 	}
 
 	void removeEvens() {
-
+		int* temp = new int[capacity];
+		int j = 0;
+		for(uint32_t i = 0; i < size; i++){
+			if(p[i] % 2 != 0){
+				temp[j] = p[i];
+				j++;
+			}
+		}
+		delete [] p;
+		p = temp;
+		size = j;
 	}
 };
 
@@ -131,11 +134,15 @@ int main() {
 	for (int i = 0; i < 9000; i++)
 		a.removeStart();
 
-
 	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
 
   a.removeEvens();
 
+	for(uint32_t i=0; i < a.getSize(); i++)
+		cout << a.get(i) << " ";
+	cout << '\n';
+
+	cout << a.getSize();
 	//999 1001 1003 ... 1999
   // keep 2 indices (i,j)
 	// first index goes through the array
