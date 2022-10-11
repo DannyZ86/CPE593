@@ -23,8 +23,9 @@ public:
   //Constructor/Destructor
   TrieDictionary(){
     //Initializeing all 26 index's as null because c++ does not do this
+    root = new TrieNode();
     for(int i = 0; i < 26; i++){
-      TrieDictionary.next[i] = nullptr;
+      root[i] = nullptr;
     }
   }
   ~TrieDictionary() {}
@@ -68,5 +69,5 @@ public:
 };
 
 int main(){
-  TrieDictionary treeDict = new TrieDictionary();
+  TrieDictionary treeDict;
 }
