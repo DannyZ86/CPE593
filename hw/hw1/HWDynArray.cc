@@ -106,42 +106,34 @@ public:
 };
 
 int main() {
-	GrowArray a(500); // empty list, with 500 elements\
-
-	//Tested and it seems to work as it should
+	GrowArray a(500); // empty list, with 500 elements
+	uint32_t n;
+  cout << "Enter an integer: ";
+  cin >> n;
 	for (int i = 0; i < 500; i++)
 		a.addEnd(i); // really fast!
 
-	//code to check my array after addEnd function
-/*
-	for(uint32_t i=0; i < a.getSize(); i++)
-		cout << a.get(i) << " ";
-	cout << '\n';
-*/
-
-	//Tested and seems to grow as it should
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < n; i++)
 		a.addEnd(i); // every time you need to grow, double
 
-	//Tested and seems to output as shown
 	a.addStart(5);
-	// 5 0 1 2 3 4 5 6 7 8....   499 0 1 2 3 4 5 6 .... 99999
 
-	//Both functions tested and seem to have correct output which was corrected on discord
-	for (int i = 0; i < 90500; i++)
+	for (int i = 0; i < n/2; i++)
 		a.removeEnd();
 
-	for (int i = 0; i < 9000; i++)
+	for (int i = 0; i < n/2; i++)
 		a.removeStart();
 
-	// 999 1000 1001 1002 1003 1004 1005 .... .... 1999
+	a.removeEvens();
 
-  a.removeEvens();
-/*
+// How To print out the array
+// This Replaces 	cout << a << '\n';
+
+
 	for(uint32_t i=0; i < a.getSize(); i++)
 		cout << a.get(i) << " ";
 	cout << '\n';
-*/
+
 //	cout << a.getSize();
 
 

@@ -123,25 +123,21 @@ public:
 
 int main() {
 	DoubleLinkedList a;
-	const uint32_t n = 100; //1000000
+	uint32_t n;
+    cout << "Enter an integer: ";
+    cin >> n;
 	for (int i = 0; i < n; i++)
 		a.addStart(i);
-	//cout << a << '\n';
-
 	for (int i = 0; i < n; i++)
 		a.addEnd(i);
-	//cout << a << '\n';
-
 	for (int i = 0; i < 3*n/2; i++)
 		a.removeStart();
-	//cout << a << '\n';
 
 	for (int i = 0; i < n/2 - 5; i++)
 		a.removeEnd();
-	//cout << a << '\n';
 
+	cout << a << '\n';
 	for (int i = 0; i < 10; i++)
 		a.insert(1, i);
-	//cout << a << '\n';
-
+	cout << a << '\n';
 }
