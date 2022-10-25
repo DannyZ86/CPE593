@@ -15,7 +15,6 @@ private:
 		string key;
 		uint32_t value;
 		Node() : key("-"), value(0) {}
-		Node(string k, uint32_t v): key(k), value(v) {}
 	};
 	uint32_t size;
 	uint32_t capacity;
@@ -70,7 +69,79 @@ public:
 	}
 
 	void hist(){
-		
+
+	}
+
+};
+
+class HashMapLinearChaining {
+private:
+	struct Node {
+		string key;
+		uint32_t value;
+		Node* next;
+	};
+	uint32_t size;
+	uint32_t capacity;
+	Node* table;
+
+
+	uint32_t hash(string key){
+		uint32_t sum = 0;
+		for(uint32_t i = 0; i < key.size(); i++){
+			sum = ((sum << 17) | (sum >> 15)) ^ ((sum << 7) | (sum >> 25)) + key[i];
+		}
+		return sum;
+	}
+public:
+	HashMapLinearChaining(uint32_t capacity) : size(0), capacity(capacity), table(new Node[capacity]){
+		for(uint32_t i = 0; i < capacity; i++){
+			table[i].key = "-";
+			table[i].value = 0;
+			table[i].next = nullptr;
+		}
+	}
+	~HashMapLinearChaining(){
+		delete [] table;
+	}
+	HashMapLinearChaining(const HashMapLinearProbing& orig) = delete;
+
+	void add(string word, uint32_t value){
+		size++;
+		uint32_t index = hash(word) % capacity;
+		Node* temp;
+		//cout << "Add Hash = " << index << endl;
+		if(table[index].key != "-"){
+			table[index].key = word;
+			table[index].value = value;
+			table[index].next = new Node();
+		}
+		else{
+			temp = new Node();
+			temp->key = word;
+			temp->value = value;
+			temp->next = &table[index];
+			table[index]& = temp;
+			delete [] temp;
+		}
+	}
+
+	bool get(string word, uint32_t* id){
+		uint32_t index = hash(word) % capacity;
+		if(table[index].key != "-"){
+			for(Node* temp = &table[index]; temp->next != nullptr; temp = temp->next){
+				if(temp->key == word){
+					*id = index;
+					return true;
+				}
+			}
+		}
+		*id = index;
+		return false;
+	}
+
+	void hist(){
+
 	}
 
 };
@@ -78,22 +149,20 @@ public:
 int main() {
 	constexpr int n = 1000000;
 	HashMapLinearProbing m1(n);
-	//HashMapLinearChaining m2(n);
+	HashMapLinearChaining m2(n);
 	int count = 0;
 	string line;
 	//read in the dictionary (213k words)
 	ifstream dict ("en213k.txt");
-	//ifstream dict ("temp.txt");
 	if(dict.is_open()){
     while( getline(dict, line) ){
       m1.add(line, count);
-			//m2.add(line, count);
+			m2.add(line, count);
 			count++;
 		}
   }
-    dict.close();
+  dict.close();
 
- cout << "WE MADE IT THROUGH ADD" << endl;
 	uint32_t id;
 
 	cout << "\n\nLinear probing\n";
@@ -102,7 +171,7 @@ int main() {
 		bool found = m1.get(words[i], &id);
 		cout << "word " << words[i] << " " << found << "id=" << id << '\n';
 	}
-	/*
+
 	// print out the histogram showing count of inserts taking 1, 2, 3, ... 9+
 	m1.hist();
 
@@ -113,5 +182,4 @@ int main() {
 	}
 	// print out the histogram showing bins of size 0, 1, 2, 3, ... 9+
 	m2.hist();
-	*/
 }
