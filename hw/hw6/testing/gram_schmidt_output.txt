@@ -1,0 +1,19 @@
+Original Matrix
+1.80429e+09 8.46931e+08 1.68169e+09 
+1.71464e+09 1.95775e+09 4.24238e+08 
+7.19885e+08 1.64976e+09 5.96517e+08 
+
+Normalized Matrix
+-nan -nan -nan 
+-nan -nan -nan 
+-nan -nan -nan 
+
+Orthogonal Matrix
+-nan -nan -nan 
+-nan -nan -nan 
+-nan -nan -nan 
+
+Normalized Orthogonal Matrix
+-nan -nan -nan 
+-nan -nan -nan 
+-nan -nan -nan 

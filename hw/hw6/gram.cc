@@ -8,6 +8,9 @@
   Daniel Zatko
   Homework 6
   Gram Shmidt
+  I had some help with this assignment from Joey Perez for the dotProduct algorithm
+  The normalization apparently works by row not column
+  The outputs were also pretty strange
 */
 
 using namespace std;
@@ -82,6 +85,21 @@ double u1;
 
 //Output the grahm shmidt matrix
 file << "Gram Shmidt Matrix" << endl;
+for(int i = 0; i < N; i++){
+  for(int j = 0; j < N; j++){
+    file << matrix[i][j] << " ";
+  }
+  file << "\n";
+}
+file << endl;
+
+//Normalize the Gram Shmidt Matrix or orthonormalize it
+for(int i = 0; i < N; i++){
+  normalizeMatrix(matrix[i],N);
+}
+
+//Output the final matrix
+file << "Final Matrix" << endl;
 for(int i = 0; i < N; i++){
   for(int j = 0; j < N; j++){
     file << matrix[i][j] << " ";
